@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
   };
 
   outputs = { self, nixpkgs }:
@@ -18,10 +18,12 @@
           };
         in
         rec {
-          default = curl;
+          default = nixStatic;
 
           curl = pkgs.curl;
           curlStatic = pkgs.pkgsStatic.curl;
+
+          nixStatic = pkgs.pkgsStatic.nix;
         }
       );
     };
