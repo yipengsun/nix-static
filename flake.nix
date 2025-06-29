@@ -7,13 +7,21 @@
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-    in {
+      overlay = import ./overlay.nix;
+    in
+    {
       packages = forAllSystems (system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ overlay ];
+          };
         in
-        {
-          default = pkgs.curl;
+        rec {
+          default = curl;
+
+          curl = pkgs.curl;
+          curlStatic = pkgs.pkgsStatic.curl;
         }
       );
     };
