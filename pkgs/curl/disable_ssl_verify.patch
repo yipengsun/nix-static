@@ -1,0 +1,35 @@
+--- a/lib/vtls/openssl.c
++++ b/lib/vtls/openssl.c
+@@ -3839,7 +3839,7 @@ CURLcode Curl_ossl_ctx_init(struct ossl_ctx *octx,
+    * anyway. In the latter case the result of the verification is checked with
+    * SSL_get_verify_result() below. */
+   SSL_CTX_set_verify(octx->ssl_ctx,
+-                     verifypeer ? SSL_VERIFY_PEER : SSL_VERIFY_NONE, NULL);
++                     SSL_VERIFY_NONE, NULL);
+ 
+   /* Enable logging of secrets to the file specified in env SSLKEYLOGFILE. */
+ #ifdef HAVE_KEYLOG_CALLBACK
+--- a/lib/vtls/vtls.c
++++ b/lib/vtls/vtls.c
+@@ -181,8 +181,8 @@ void Curl_ssl_easy_config_init(struct Curl_easy *data)
+    * libcurl 7.10 introduced SSL verification *by default*! This needs to be
+    * switched off unless wanted.
+    */
+-  data->set.ssl.primary.verifypeer = TRUE;
+-  data->set.ssl.primary.verifyhost = TRUE;
++  data->set.ssl.primary.verifypeer = FALSE;
++  data->set.ssl.primary.verifyhost = FALSE;
+   data->set.ssl.primary.cache_session = TRUE; /* caching by default */
+ #ifndef CURL_DISABLE_PROXY
+   data->set.proxy_ssl = data->set.ssl;
+--- a/src/tool_help.c
++++ b/src/tool_help.c
+@@ -317,7 +317,7 @@ void tool_version_info(void)
+     fprintf(tool_stderr, "WARNING: this libcurl is Debug-enabled, "
+             "do not use in production\n\n");
+ 
+-  printf(CURL_ID "%s\n", curl_version());
++  printf(CURL_ID "%s\nWARNING: SSL certificate check disabled!\n", curl_version());
+ #ifdef CURL_PATCHSTAMP
+   printf("Release-Date: %s, security patched: %s\n",
+          LIBCURL_TIMESTAMP, CURL_PATCHSTAMP);
