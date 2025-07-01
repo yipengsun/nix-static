@@ -23,6 +23,8 @@
           curl = pkgs.curl;
           curlStatic = pkgs.pkgsStatic.curl;
 
+          gitStatic = pkgs.pkgsStatic.git;
+
           nixStatic = pkgs.pkgsStatic.nix;
         }
       );
