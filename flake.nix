@@ -23,7 +23,8 @@
           curl = pkgs.curl;
           curlStatic = pkgs.pkgsStatic.curl;
 
-          nixStatic = pkgs.pkgsStatic.nix;
+          nix = pkgs.nix;
+          nixStatic = pkgs.pkgsStatic.nix.out;
         }
       );
     };
