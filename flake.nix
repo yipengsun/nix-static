@@ -25,7 +25,8 @@
 
           gitStatic = pkgs.pkgsStatic.git;
 
-          nixStatic = pkgs.pkgsStatic.nix;
+          nix = pkgs.nix;
+          nixStatic = pkgs.pkgsStatic.nix.out;
         }
       );
     };
