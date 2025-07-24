@@ -25,6 +25,8 @@
 
           nix = pkgs.nix;
           nixStatic = pkgs.pkgsStatic.nix.out;
+
+          patchelfStatic = pkgs.pkgsStatic.patchelf;
         }
       );
     };
