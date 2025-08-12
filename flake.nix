@@ -5,17 +5,24 @@
 
   outputs = { self, nixpkgs }:
     let
-      supportedSystems = [ "x86_64-linux" ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      overlay = import ./overlay.nix;
+      forSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+      ];
+
+      overlay = import ./overlay;
+
+      pkgsFactory =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
     in
     {
-      packages = forAllSystems (system:
+      packages = forSystems (
+        system:
         let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ overlay ];
-          };
+          pkgs = pkgsFactory system;
         in
         rec {
           default = nixStatic;
