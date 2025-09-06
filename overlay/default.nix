@@ -1,5 +1,4 @@
-final: prev:
-{
+final: prev: {
   curl = prev.curl.overrideAttrs (oldAttrs: {
     patches = (oldAttrs.patches or [ ]) ++ [ ./curl/disable_ssl_verify.patch ];
   });
